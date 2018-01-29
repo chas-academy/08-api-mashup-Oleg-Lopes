@@ -31,11 +31,35 @@ $(function() {
                         '<img src="' + photoUrl + '"/>'
                     );
                 });
+                $.ajax({
+                    method: "POST",
+                    url:
+                        "http://words.bighugelabs.com/api/2/c54b5485a3637c3d910779e39a80bc89/" +
+                        $("input[type=text]").val() +
+                        "/json",
+                    dataType: "json",
+                    success: function(obj) {
+                        console.log(obj);
+                        $("#keywords_container ul").html("");
+                        jQuery.each(obj.noun.syn, function(index) {
+                            let word = obj.noun.syn[index];
+                            $("#keywords_container ul").append(
+                                "<li><a href=''>" + word + "</a></li>"
+                            );
+                        });
+                    }
+                });
             },
             error: function() {
                 alert("error");
             }
         });
+    });
+
+    $(document).on("click", "ul > li > a", function(e) {
+        e.preventDefault();
+        $("input[type=text]").val($(this).text());
+        $("form").submit();
     });
 });
 
