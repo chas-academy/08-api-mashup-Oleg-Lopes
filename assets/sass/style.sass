@@ -1,0 +1,39 @@
+html
+    box-sizing: border-box
+
+*, *:before, *:after
+    box-sizing: inherit
+    margin: 0
+    padding: 0
+
+*:focus, *:active
+    outline: none
+////////////////////////////
+
+header
+    text-align: center
+
+body
+    width: 100%
+    main
+        form
+            display: flex
+            justify-content: center
+            margin: 0 auto
+            width: 80%
+            input
+                display: inline-block
+                height: 40px
+                font-size: 30px
+            input[type=text]
+                width: 60%
+            input[type=submit]
+                margin: 0 0 0 20px
+                width: 15%
+        #result_container
+            display: flex
+            justify-content: center
+            #photos_container
+                width: 70%
+            #keywords_container
+                width: 20%

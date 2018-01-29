@@ -1,0 +1,56 @@
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+*:focus, *:active {
+  outline: none;
+}
+
+header {
+  text-align: center;
+}
+
+body {
+  width: 100%;
+}
+
+body main form {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  width: 80%;
+}
+
+body main form input {
+  display: inline-block;
+  height: 40px;
+  font-size: 30px;
+}
+
+body main form input[type=text] {
+  width: 60%;
+}
+
+body main form input[type=submit] {
+  margin: 0 0 0 20px;
+  width: 15%;
+}
+
+body main #result_container {
+  display: flex;
+  justify-content: center;
+}
+
+body main #result_container #photos_container {
+  width: 70%;
+}
+
+body main #result_container #keywords_container {
+  width: 20%;
+}
