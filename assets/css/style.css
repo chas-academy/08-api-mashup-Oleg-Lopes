@@ -44,13 +44,23 @@ body main form input[type=submit] {
 
 body main #result_container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  padding: 30px;
 }
 
 body main #result_container #photos_container {
-  width: 70%;
+  width: 65%;
+  column-count: 4;
 }
 
 body main #result_container #keywords_container {
-  width: 20%;
+  min-width: 20%;
+}
+
+body main #result_container #keywords_container ul li {
+  list-style: none;
+}
+
+body main #result_container #keywords_container ul li a {
+  text-decoration: none;
 }

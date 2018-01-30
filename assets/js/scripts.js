@@ -2,21 +2,29 @@
 /////////////////// START - DOCUMENT.READY /////////////////////////
 ////////////////////////////////////////////////////////////////////
 
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+}
+
 $(function() {
     $("form").on("submit", function(e) {
         e.preventDefault();
+        let tags = $("input[type=text]")
+            .val()
+            .split(" ")
+            .filter(onlyUnique) // only unique tags
+            .join(",");
         $.ajax({
             method: "POST",
             url:
                 "https://api.flickr.com/services/rest/?method=flickr.photos.search&tags=" +
-                $("input[type=text]").val() +
-                "&tag_mode=any&format=json&nojsoncallback=1&api_key=bb4c35c8650d0b204792b502e7aca808",
+                tags +
+                "&tag_mode=any&page=&format=json&nojsoncallback=1&api_key=bb4c35c8650d0b204792b502e7aca808",
             dataType: "json",
             success: function(obj) {
                 $("#photos_container").html("");
-                console.log(obj);
-                jQuery.each(obj.photos.photo, function(index) {
-                    let photo = obj.photos.photo[index];
+                $.each(obj.photos.photo, function(indexPhoto) {
+                    let photo = obj.photos.photo[indexPhoto]; // each photo
                     let photoUrl =
                         "https://farm" +
                         photo.farm +
@@ -28,30 +36,40 @@ $(function() {
                         photo.secret +
                         ".jpg";
                     $("#photos_container").append(
-                        '<img src="' + photoUrl + '"/>'
+                        '<a href="https://www.flickr.com/photos/' +
+                            photo.owner +
+                            "/" +
+                            photo.id +
+                            '/in/feed"><img src="' +
+                            photoUrl +
+                            '"/></a>'
                     );
-                });
-                $.ajax({
-                    method: "POST",
-                    url:
-                        "http://words.bighugelabs.com/api/2/c54b5485a3637c3d910779e39a80bc89/" +
-                        $("input[type=text]").val() +
-                        "/json",
-                    dataType: "json",
-                    success: function(obj) {
-                        console.log(obj);
-                        $("#keywords_container ul").html("");
-                        jQuery.each(obj.noun.syn, function(index) {
-                            let word = obj.noun.syn[index];
-                            $("#keywords_container ul").append(
-                                "<li><a href=''>" + word + "</a></li>"
-                            );
-                        });
-                    }
                 });
             },
             error: function() {
-                alert("error");
+                alert("lol kek error with getting photos");
+            }
+        });
+        tag = tags.split(",")[0]; // first tag
+        $.ajax({
+            method: "POST",
+            url:
+                "http://words.bighugelabs.com/api/2/c54b5485a3637c3d910779e39a80bc89/" +
+                tag + // keywords for the first tag
+                "/json",
+            dataType: "json",
+            success: function(obj) {
+                $("#keywords_container ul").html("");
+                $.each(obj.noun.syn, function(indexWord) {
+                    $("#keywords_container ul").append(
+                        "<li><a href=''>" +
+                            obj.noun.syn[indexWord] +
+                            "</a></li>"
+                    );
+                });
+            },
+            error: function() {
+                alert("lol kek error with getting keywords");
             }
         });
     });
