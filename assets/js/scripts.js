@@ -1,11 +1,10 @@
-////////////////////////////////////////////////////////////////////
-/////////////////// START - DOCUMENT.READY /////////////////////////
-////////////////////////////////////////////////////////////////////
-
 function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
 }
 
+////////////////////////////////////////////////////////////////////
+/////////////////// START - DOCUMENT.READY /////////////////////////
+////////////////////////////////////////////////////////////////////
 $(function() {
     $("form").on("submit", function(e) {
         e.preventDefault();
@@ -13,7 +12,7 @@ $(function() {
             .val()
             .split(" ")
             .filter(onlyUnique) // only unique tags
-            .join(",");
+            .join(","); // join them to "tag1,tag2,tag3..."
         $.ajax({
             method: "POST",
             url:
@@ -22,8 +21,9 @@ $(function() {
                 "&tag_mode=any&page=&format=json&nojsoncallback=1&api_key=bb4c35c8650d0b204792b502e7aca808",
             dataType: "json",
             success: function(obj) {
-                $("#photos_container").html("");
+                $("#photos_container").html(""); // before each new call removing previous content
                 $.each(obj.photos.photo, function(indexPhoto) {
+                    // for each photo creating a link and img tags
                     let photo = obj.photos.photo[indexPhoto]; // each photo
                     let photoUrl =
                         "https://farm" +
@@ -59,11 +59,12 @@ $(function() {
                 "/json",
             dataType: "json",
             success: function(obj) {
-                $("#keywords_container ul").html("");
+                $("#keywords_container ul").html(""); // before each new call removing previous content
                 $.each(obj.noun.syn, function(indexWord) {
+                    // for each synonym creating a link
                     $("#keywords_container ul").append(
                         "<li><a href=''>" +
-                            obj.noun.syn[indexWord] +
+                        obj.noun.syn[indexWord] + // getting the synonyms
                             "</a></li>"
                     );
                 });
@@ -80,7 +81,6 @@ $(function() {
         $("form").submit();
     });
 });
-
 ////////////////////////////////////////////////////////////////////
 //////////////////// END - DOCUMENT.READY //////////////////////////
 ////////////////////////////////////////////////////////////////////

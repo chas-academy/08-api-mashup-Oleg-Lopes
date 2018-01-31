@@ -18,6 +18,7 @@ header {
 
 body {
   width: 100%;
+  background: #E2E4E6;
 }
 
 body main form {
@@ -43,18 +44,31 @@ body main form input[type=submit] {
 }
 
 body main #result_container {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
   padding: 30px;
 }
 
 body main #result_container #photos_container {
-  width: 65%;
-  column-count: 4;
+  width: 3fr;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
+}
+
+body main #result_container #photos_container a {
+  display: flex;
+  justify-content: center;
+  border: 3px solid #E2E4E6;
+}
+
+body main #result_container #photos_container a:hover {
+  border: 3px solid #0079bf;
+  box-shadow: 0 0 5px 0 #0284c6;
 }
 
 body main #result_container #keywords_container {
-  min-width: 20%;
+  min-width: 1fr;
 }
 
 body main #result_container #keywords_container ul li {
