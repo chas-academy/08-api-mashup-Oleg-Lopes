@@ -60,17 +60,26 @@ $(function() {
             dataType: "json",
             success: function(obj) {
                 $("#keywords_container ul").html(""); // before each new call removing previous content
-                $.each(obj.noun.syn, function(indexWord) {
-                    // for each synonym creating a link
+                if (obj.hasOwnProperty("noun")) {
+                    $.each(obj.noun.syn, function(indexWord) {
+                        // for each synonym creating a link
+                        $("#keywords_container ul").append(
+                            "<li><a href=''>" +
+                            obj.noun.syn[indexWord] + // getting the synonyms
+                                "</a></li>"
+                        );
+                    });
+                } else {
                     $("#keywords_container ul").append(
-                        "<li><a href=''>" +
-                        obj.noun.syn[indexWord] + // getting the synonyms
-                            "</a></li>"
+                        "<li>Couldn't get any related tags</li>"
                     );
-                });
+                }
             },
             error: function() {
-                alert("lol kek error with getting keywords");
+                $("#keywords_container ul").html(""); // before each new call removing previous content
+                $("#keywords_container ul").append(
+                    "<li>Couldn't get any related tags</li>"
+                );
             }
         });
     });
